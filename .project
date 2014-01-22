@@ -3,6 +3,7 @@
 	<name>TabaPlannerWEB</name>
 	<comment></comment>
 	<projects>
+		<project>TabaPlannerEJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
