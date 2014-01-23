@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head></h:head>
+<body>
+	<h:form id="frmTeste">
+		<h:messages id="msgOK" />
+
+
+		<h3>Gerenciar Iteracao</h3>
+		<h:panelGrid border='1' columns="2" styleClass="panelGrid"
+			rowClasses="panelFirstLine,panelNextLine">
+			<h:outputLabel for="iteruid" value="Codigo" />
+			<h:inputText id="iteruid" value="#{iteracaoweb.iteracao.uid}"
+				style=" width : 325px;" />
+			<h:outputLabel for="iterName" value="Nome" />
+			<h:inputText id="iterName" value="#{iteracaoweb.iteracao.nome}"
+				style=" width : 332px;" />
+            <h:outputLabel for="iterName" value="Projeto" />
+			<h:selectOneMenu id="projeto" 
+			                 value="#{iteracaoweb.iteracao.projeto}" 
+			                 converter="entityConverter">
+			                 <f:selectItem itemValue="" itemLabel="Selecione Projeto"/>
+				              <f:selectItems value="#{iteracaoweb.todosProjetos}" 
+				                             var ="projeto" itemLabel="#{projeto.nome}" itemValue="#{projeto}"/>
+			</h:selectOneMenu>
+			
+			<h:outputLabel for="iterduracao" value="Duraçao" />
+			<h:inputText id="iterduracao" value="#{iteracaoweb.iteracao.duracao}"
+				style=" width : 325px;" />
+
+
+		</h:panelGrid>
+		<h:panelGrid columns="4">
+			<h:commandButton action="#{iteracaoweb.salva()}" value="Salvar" />
+			<h:commandButton action="#{iteracaoweb.busca()}" value="Busca" />
+			<h:commandButton action="#{iteracaoweb.update()}" value="Update" />
+			<h:commandButton action="#{iteracaoweb.delete()}" value="Excluir" />
+		</h:panelGrid>
+		<br />
+
+
+		<br />
+	</h:form>
+</body>
+</html>

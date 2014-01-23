@@ -28,7 +28,7 @@ public class ProjetoWebController {
 
 	private Projeto projeto;
 
-	public Projeto getprojeto() {
+	public Projeto getProjeto() {
 		if (projeto == null) {
 			projeto = new Projeto();
 		}
