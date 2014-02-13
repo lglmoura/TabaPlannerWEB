@@ -93,7 +93,7 @@ public class ProjetoPWebController {
 					new FacesMessage("projeto não Existe"));
 
 		} else {
-			System.out.println("Entrei aqui 1212121");
+			
 			jprojeto.update(projetoSelecionado);
 			
 

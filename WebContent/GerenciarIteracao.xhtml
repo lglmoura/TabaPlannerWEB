@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Gerenciador de Iteracaos</title>
+	<link type="text/css" rel="stylesheet" href="dot-luv/skin.css" />
+</h:head>
+<h:body>
+
+	<p:fieldset legend="Gerenciar Iteracao" toggleable="true"
+		toggleSpeed="500">
+		<h:form id="form">
+			<center>
+				<p:dataTable id="tabela" var="iteracao"
+					value="#{iteracaoPrime.allIteracao}" rowKey="#{iteracao.uid}"
+					selectionMode="single" scrollable="true" scrollHeight="300"
+					scrollWidth="850" selection="#{iteracaoPrime.iteracaoSelecionado}">
+					<p:column headerText="Codigo" width="50">
+						<h:outputText value="#{iteracao.uid}" />
+					</p:column>
+					<p:column headerText="Nome"  width="300">
+						<h:outputText value="#{iteracao.nome}" />
+					</p:column>
+					<p:column headerText="Duração" width="60">
+						<h:outputText value="#{iteracao.duracao}" />
+					</p:column>
+					<p:column headerText="Projeto" width="200">
+						<h:outputText value="#{iteracao.projeto.nome}" />
+					</p:column>
+
+				</p:dataTable>
+			</center>
+		</h:form>
+		<center>
+			<p:commandButton value="Cadastrar" icon="ui-icon-document"
+				update=":fiteracao:displayCadastro" oncomplete="cadastro.show()" />
+
+			<p:commandButton value="Alterar" icon="ui-icon-search"
+				oncomplete="altera.show()" update=":fiteracaoA:displayaltera" />
+
+			<p:commandButton value="Deletar" icon="ui-icon-disk"
+				oncomplete="deleta.show()" update=":displaydeleta" />
+
+
+
+		</center>
+	</p:fieldset>
+
+	<p:growl id="menssagem" showDetail="true" life="3000" for="msg" />
+
+	<!--............................................................................DIALOGOS E FUNÇÕES-->
+	<!--CADASTRO iteracao-->
+	<p:dialog id="dialogCadastro" header="Cadastro de iteracao"
+		widgetVar="cadastro" resizable="false" width="500" showEffect="clip"
+		hideEffect="explode">
+		<h:form id="fiteracao">
+			<h:panelGrid id="displayCadastro" border='1' columns="2"
+				styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine">
+				<h:outputLabel value="Codigo" />
+				<p:inputText value="#{iteracaoPrime.iteracao.uid}"
+					style=" width : 325px;" />
+				<h:outputLabel value="Nome" />
+				<p:inputText value="#{iteracaoPrime.iteracao.nome}"
+					style=" width : 332px;" />
+				<h:outputLabel value="Duração" />
+				<p:inputText value="#{iteracaoPrime.iteracao.duracao}"
+					style=" width : 325px;" />
+
+				<h:outputLabel value="Projeto" />
+				<p:selectOneMenu id="projeto"
+					value="#{iteracaoPrime.iteracao.projeto}"
+					converter="entityConverter" effect="fade" var="i" filter="true" style="width:160px" panelStyle="width:150px"
+					filterMatchMode="startsWith">
+					<f:selectItem itemValue="" itemLabel="Selecione Projeto" />
+					<f:selectItems value="#{iteracaoPrime.todosProjetos}" var="projeto"
+						itemLabel="#{projeto.nome}" itemValue="#{projeto}" />
+						<p:column>
+						   #{i.uid} - #{i.nome}
+						</p:column>
+				</p:selectOneMenu>
+
+				<p:commandButton value="Cadastrar" icon="ui-icon-search"
+					action="#{iteracaoPrime.salva()}" update=":form:tabela,:menssagem" />
+
+			</h:panelGrid>
+			<br />
+		</h:form>
+	</p:dialog>
+	<script type="text/javascript">   
+           function camposObrigatorios() {               
+               jQuery('#form2').effect("shake", { times:3 }, 100);  
+           }   
+      </script>
+
+	<!-- Altera -->
+
+	<p:dialog id="dialogaltera" header="Altera" widgetVar="altera"
+		resizable="false" width="500" showEffect="clip" hideEffect="explode">
+		<h:form id="fiteracaoA">
+			<h:panelGrid id="displayaltera" border='1' columns="2"
+				styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine">
+				<h:outputLabel value="Codigo" />
+				<p:outputLabel value="#{iteracaoPrime.iteracaoSelecionado.uid}"
+					style=" width : 325px;" />
+				<h:outputLabel value="Nome" />
+				<p:inputText value="#{iteracaoPrime.iteracaoSelecionado.nome}"
+					style=" width : 332px;" />
+				<h:outputLabel value="Duração" />
+				<p:inputText value="#{iteracaoPrime.iteracaoSelecionado.duracao}"
+					style=" width : 325px;" />
+
+				<h:outputLabel value="Projeto" />
+				<p:selectOneMenu id="projeto"
+					value="#{iteracaoPrime.iteracaoSelecionado.projeto}"
+					converter="entityConverter" effect="fade" var="i" filter="true"
+					filterMatchMode="startsWith">
+					<f:selectItem itemValue="" itemLabel="Selecione Projeto" />
+					<f:selectItems value="#{iteracaoPrime.todosProjetos}" var="projeto"
+						itemLabel="#{projeto.nome}" itemValue="#{projeto}" />
+						<p:column>
+						   #{i.uid} - #{i.nome}
+						</p:column>
+				</p:selectOneMenu>
+
+				<p:commandButton value="Alterar" icon="ui-icon-search"
+					action="#{iteracaoPrime.update()}" update=":form:tabela,:menssagem" />
+
+
+
+
+			</h:panelGrid>
+			<br />
+		</h:form>
+	</p:dialog>
+
+
+
+	<!--DELEÇÂO DE CONTATO-->
+	<p:dialog id="dialogDeleta" header="Deletar contato" widgetVar="deleta"
+		width="500" showEffect="clip" hideEffect="fold">
+		<h:panelGrid id="displaydeleta" columns="2" cellpadding="4">
+			<h:outputText value="Deseja exluir realmente o contato?" />
+			<br />
+			<p:commandButton value="Sim" action="#{iteracaoPrime.delete()}"
+				update=":form:tabela,:menssagem" />
+			<p:commandButton value="Não" oncomplete="deleta.hide()"
+				update=":form:tabela,:menssagem" />
+		</h:panelGrid>
+	</p:dialog>
+
+
+</h:body>
+</html>
