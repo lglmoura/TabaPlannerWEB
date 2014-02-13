@@ -22,17 +22,18 @@
 			<h:outputLabel for="projdescricao" value="Descrição" />
 			<h:inputText id="projdescricao"
 				value="#{projetoweb.projeto.descricao}" style=" width : 325px;" />
-			<h:outputLabel for="projdi" value="Data Inicio" />
-			<h:inputText id="projdi" value="#{projetoweb.projeto.datainicio}"
-				style=" width : 332px;">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+			
+			<h:outputLabel value="Data Inicio" />
+				<h:inputText value="#{projetoweb.projeto.datainicio}"
+					style=" width : 332px;">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</h:inputText>
+				<h:outputLabel for="projdf" value="Data Fim" />
+				<h:inputText id="projdf" value="#{projetoweb.projeto.datafim}"
+					style=" width : 332px;">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 			</h:inputText>
-			<h:outputLabel for="projdf" value="Data Fim" />
-			<h:inputText id="projdf" value="#{projetoweb.projeto.datafim}"
-				style=" width : 332px;">
-				<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-			</h:inputText>
-
+			
 		</h:panelGrid>
 		<h:panelGrid columns="4">
 			<h:commandButton action="#{projetoweb.salva()}" value="Salvar" />

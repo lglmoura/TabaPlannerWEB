@@ -45,21 +45,11 @@ public class IteracaoWebController {
 	public List<Iteracao> getAlliteracao() {
 		return jiteracao.findAll();
 	}
-	
-	public List<Projeto> getTodosProjetos() {  
-		  
-        /*List<Projeto> listaProjetos = jprojeto.findAll();  
-        //List<SelectItem> listaSelect = new ArrayList<SelectItem>();  
-        List<Projeto> listaSelect = new ArrayList<Projeto>();
-  
-        for (Projeto e : listaProjetos) {  
-            listaSelect.add(e);//new SelectItem(new String(e.getUid()), e.getNome()));  
-        }  
-  
-        return listaSelect;*/
-        return jprojeto.findAll();
-    } 
-	
+
+	public List<Projeto> getTodosProjetos() {
+
+		return jprojeto.findAll();
+	}
 
 	public String salva() {
 

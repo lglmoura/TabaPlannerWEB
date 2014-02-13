@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Gerenciador de Projetos</title>
+	<link type="text/css" rel="stylesheet" href="dot-luv/skin.css" />
+</h:head>
+<h:body>
+
+	<p:fieldset legend="Gerenciar Projeto" toggleable="true"
+		toggleSpeed="500">
+		<h:form id="form">
+			<center>
+				<p:dataTable id="tabela" var="projeto"
+					value="#{projetoPrime.allProjeto}" rowKey="#{projeto.uid}"
+					selectionMode="single" scrollable="true" scrollHeight="300"
+					scrollWidth="850" selection="#{projetoPrime.projetoSelecionado}">
+					<p:column headerText="Codigo" width="100">
+						<h:outputText value="#{projeto.uid}" />
+					</p:column>
+					<p:column headerText="Nome" width="100">
+						<h:outputText value="#{projeto.nome}" />
+					</p:column>
+					<p:column headerText="Descrição">
+						<h:outputText value="#{projeto.descricao}" />
+					</p:column>
+					<p:column headerText="Data Inicio">
+						<h:outputText value="#{projeto.datainicio}" />
+					</p:column>
+					<p:column headerText="Data Fim">
+						<h:outputText value="#{projeto.datafim}" />
+					</p:column>
+				</p:dataTable>
+			</center>
+		</h:form>
+		<center>
+			<p:commandButton value="Cadastrar" icon="ui-icon-document"
+				update=":fprojeto:displayCadastro" oncomplete="cadastro.show()" />
+
+			<p:commandButton value="Alterar" icon="ui-icon-search"
+				oncomplete="altera.show()" update=":fprojetoA:displayaltera" />
+
+			<p:commandButton value="Deletar" icon="ui-icon-disk"
+				oncomplete="deleta.show()" update=":displaydeleta" />
+
+
+
+		</center>
+	</p:fieldset>
+
+	<p:growl id="menssagem" showDetail="true" life="3000" for="msg" />
+
+	<!--............................................................................DIALOGOS E FUNÇÕES-->
+	<!--CADASTRO Projeto-->
+	<p:dialog id="dialogCadastro" header="Cadastro de Projeto"
+		widgetVar="cadastro" resizable="false" width="500" showEffect="clip"
+		hideEffect="explode">
+		<h:form id="fprojeto">
+			<h:panelGrid id="displayCadastro" border='1' columns="2"
+				styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine">
+				<h:outputLabel value="Codigo" />
+				<p:inputText value="#{projetoPrime.projeto.uid}"
+					style=" width : 325px;" />
+				<h:outputLabel value="Nome" />
+				<p:inputText value="#{projetoPrime.projeto.nome}"
+					style=" width : 332px;" />
+				<h:outputLabel value="Descrição" />
+				<p:inputText value="#{projetoPrime.projeto.descricao}"
+					style=" width : 325px;" />
+
+				<h:outputLabel value="Data Inicio" />
+				<p:calendar value="#{projetoPrime.projeto.datainicio}"
+					pattern="dd/MM/yyyy" showOn="button" />
+
+				<h:outputLabel value="Data Fim" />
+				<p:calendar value="#{projetoPrime.projeto.datafim}"
+					pattern="dd/MM/yyyy" showOn="button" />
+
+				<p:commandButton value="Cadastrar" icon="ui-icon-search"
+					action="#{projetoPrime.salva()}"
+					update=":form:tabela,:menssagem" />
+
+			</h:panelGrid>
+			<br />
+		</h:form>
+	</p:dialog>
+	<script type="text/javascript">   
+           function camposObrigatorios() {               
+               jQuery('#form2').effect("shake", { times:3 }, 100);  
+           }   
+      </script>
+
+	<!-- Altera -->
+
+	<p:dialog id="dialogaltera" header="Altera" widgetVar="altera"
+		resizable="false" width="500" showEffect="clip" hideEffect="explode">
+		<h:form id="fprojetoA">
+			<h:panelGrid id="displayaltera" border='1' columns="2"
+				styleClass="panelGrid" rowClasses="panelFirstLine,panelNextLine">
+				<h:outputLabel value="Codigo" />
+				<p:outputLabel value="#{projetoPrime.projetoSelecionado.uid}"
+					style=" width : 325px;" />
+				<h:outputLabel value="Nome" />
+				<p:inputText value="#{projetoPrime.projetoSelecionado.nome}"
+					style=" width : 332px;" />
+				<h:outputLabel value="Descrição" />
+				<p:inputText value="#{projetoPrime.projetoSelecionado.descricao}"
+					style=" width : 325px;" />
+
+				<h:outputLabel value="Data Inicio" />
+				<p:calendar value="#{projetoPrime.projetoSelecionado.datainicio}"
+					pattern="dd/MM/yyyy" showOn="button" />
+
+				<h:outputLabel value="Data Fim" />
+				<p:calendar value="#{projetoPrime.projetoSelecionado.datafim}"
+					pattern="dd/MM/yyyy" showOn="button" />
+
+				<p:commandButton value="Alterar" icon="ui-icon-search" 
+					action="#{projetoPrime.update()}"
+					update=":form:tabela,:menssagem" />
+
+
+
+
+			</h:panelGrid>
+			<br />
+		</h:form>
+	</p:dialog>
+
+
+
+	<!--DELEÇÂO DE CONTATO-->
+	<p:dialog id="dialogDeleta" header="Deletar contato" widgetVar="deleta"
+		width="500" showEffect="clip" hideEffect="fold">
+		<h:panelGrid id="displaydeleta" columns="2" cellpadding="4">
+			<h:outputText value="Deseja exluir realmente o contato?" />
+			<br />
+			<p:commandButton value="Sim" action="#{projetoPrime.delete()}"
+				update=":form:tabela,:menssagem" />
+			<p:commandButton value="Não" oncomplete="deleta.hide()"
+				update=":form:tabela,:menssagem" />
+		</h:panelGrid>
+	</p:dialog>
+
+
+</h:body>
+</html>
